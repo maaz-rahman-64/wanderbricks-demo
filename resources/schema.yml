@@ -1,0 +1,10 @@
+resources:
+  catalogs:
+    wanderbricks_tutorial_catalog:
+      name: ${var.catalog}
+      comment: Wanderbricks tutorial catalog created by the DAB-first tutorial.
+  schemas:
+    tutorial_schema:
+      catalog_name: ${var.catalog}
+      name: ${var.schema}
+      comment: Governed Wanderbricks tutorial assets created by the DAB-first tutorial.

@@ -1,0 +1,4 @@
+.databricks/
+*.log
+.DS_Store
+app/*
