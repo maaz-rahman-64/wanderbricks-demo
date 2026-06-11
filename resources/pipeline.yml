@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    wanderbricks_sdp:
+      name: Wanderbricks Lakeflow SDP - ${var.schema}
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      development: false
+      channel: CURRENT
+      libraries:
+        - file:
+            path: ../src/lakeflow/wanderbricks_pipeline.sql
+      configuration:
+        source_catalog: samples
+        source_schema: wanderbricks

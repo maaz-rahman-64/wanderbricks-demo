@@ -1,0 +1,9 @@
+resources:
+  dashboards:
+    wanderbricks_platform_dashboard:
+      display_name: Wanderbricks Revenue and Guest Experience
+      file_path: ../dashboards/wanderbricks_revenue_guest_experience.lvdash.json
+      parent_path: ${var.dashboard_parent_path}
+      warehouse_id: ${resources.sql_warehouses.wanderbricks_sql_warehouse.id}
+      dataset_catalog: ${var.catalog}
+      dataset_schema: ${var.schema}

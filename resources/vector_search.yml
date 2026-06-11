@@ -1,0 +1,5 @@
+resources:
+  vector_search_endpoints:
+    wanderbricks_search_endpoint:
+      name: ${var.search_endpoint_name}
+      endpoint_type: STANDARD

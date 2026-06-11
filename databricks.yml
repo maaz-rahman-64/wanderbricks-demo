@@ -1,0 +1,30 @@
+bundle:
+  name: wanderbricks-dab-first-tutorial
+  engine: direct
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Target Unity Catalog catalog for tutorial outputs.
+    default: demo_${workspace.current_user.short_name}
+
+  schema:
+    description: Target schema that the bundle creates and fills.
+    default: wanderbricks_tutorial
+
+  search_endpoint_name:
+    description: AI Search endpoint name.
+    default: wanderbricks-search-endpoint
+
+  dashboard_parent_path:
+    description: Workspace folder where the AI/BI dashboard is deployed.
+    default: /Workspace/Users/${workspace.current_user.userName}
+
+targets:
+  dev:
+    default: true
+    mode: production
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}

@@ -1,0 +1,302 @@
+{
+  "datasets": [
+    {
+      "name": "destination_summary",
+      "displayName": "Destination Summary",
+      "queryLines": [
+        "SELECT",
+        "  SUM(gross_booking_value) AS gross_booking_value,",
+        "  SUM(paid_amount) AS paid_amount,",
+        "  SUM(booking_count) AS booking_count,",
+        "  SUM(completed_booking_count) AS completed_booking_count ",
+        "FROM gold_destination_revenue"
+      ]
+    },
+    {
+      "name": "top_destinations",
+      "displayName": "Top Destinations",
+      "queryLines": [
+        "SELECT",
+        "  destination,",
+        "  gross_booking_value,",
+        "  booking_count,",
+        "  average_booking_value ",
+        "FROM gold_destination_revenue ",
+        "ORDER BY gross_booking_value DESC ",
+        "LIMIT 10 "
+      ]
+    },
+    {
+      "name": "property_recovery",
+      "displayName": "Property Recovery Watchlist",
+      "queryLines": [
+        "SELECT",
+        "  property_title,",
+        "  destination,",
+        "  property_type,",
+        "  gross_booking_value,",
+        "  review_count,",
+        "  average_rating,",
+        "  low_rating_count,",
+        "  guest_recovery_signal ",
+        "FROM gold_property_quality ",
+        "WHERE guest_recovery_signal IN ('review', 'watch') ",
+        "ORDER BY gross_booking_value DESC, average_rating ASC ",
+        "LIMIT 20"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "overview",
+      "displayName": "Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "gross_booking_value_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "destination_summary",
+                  "fields": [
+                    {
+                      "name": "gross_booking_value",
+                      "expression": "`gross_booking_value`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "gross_booking_value",
+                  "displayName": "Gross Booking Value",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact"
+                  }
+                }
+              },
+              "frame": {
+                "title": "Gross Booking Value",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "booking_count_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "destination_summary",
+                  "fields": [
+                    {
+                      "name": "booking_count",
+                      "expression": "`booking_count`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "booking_count",
+                  "displayName": "Bookings",
+                  "format": {
+                    "type": "number",
+                    "abbreviation": "compact"
+                  }
+                }
+              },
+              "frame": {
+                "title": "Bookings",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "top_destinations_bar",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "top_destinations",
+                  "fields": [
+                    {
+                      "name": "destination",
+                      "expression": "`destination`"
+                    },
+                    {
+                      "name": "gross_booking_value",
+                      "expression": "`gross_booking_value`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "destination",
+                  "scale": {
+                    "type": "categorical"
+                  },
+                  "displayName": "Destination"
+                },
+                "y": {
+                  "fieldName": "gross_booking_value",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact"
+                  },
+                  "displayName": "Gross Booking Value"
+                }
+              },
+              "frame": {
+                "title": "Top Destinations By Booking Value",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 7
+          }
+        },
+        {
+          "widget": {
+            "name": "property_recovery_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "property_recovery",
+                  "fields": [
+                    {
+                      "name": "property_title",
+                      "expression": "`property_title`"
+                    },
+                    {
+                      "name": "destination",
+                      "expression": "`destination`"
+                    },
+                    {
+                      "name": "property_type",
+                      "expression": "`property_type`"
+                    },
+                    {
+                      "name": "gross_booking_value",
+                      "expression": "`gross_booking_value`"
+                    },
+                    {
+                      "name": "review_count",
+                      "expression": "`review_count`"
+                    },
+                    {
+                      "name": "average_rating",
+                      "expression": "`average_rating`"
+                    },
+                    {
+                      "name": "guest_recovery_signal",
+                      "expression": "`guest_recovery_signal`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "property_title",
+                    "displayName": "Property"
+                  },
+                  {
+                    "fieldName": "destination",
+                    "displayName": "Destination"
+                  },
+                  {
+                    "fieldName": "property_type",
+                    "displayName": "Type"
+                  },
+                  {
+                    "fieldName": "gross_booking_value",
+                    "displayName": "Booking Value"
+                  },
+                  {
+                    "fieldName": "review_count",
+                    "displayName": "Reviews"
+                  },
+                  {
+                    "fieldName": "average_rating",
+                    "displayName": "Avg Rating"
+                  },
+                  {
+                    "fieldName": "guest_recovery_signal",
+                    "displayName": "Signal"
+                  }
+                ]
+              },
+              "frame": {
+                "title": "Guest Recovery Watchlist",
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 6,
+            "height": 7
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    }
+  }
+}
+

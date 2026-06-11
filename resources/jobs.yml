@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    wanderbricks_setup:
+      name: Wanderbricks tutorial setup - ${var.schema}
+      description: Runs the Lakeflow foundation and creates tutorial semantic assets.
+      tasks:
+        - task_key: run_lakeflow_foundation
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.wanderbricks_sdp.id}
+            full_refresh: true
+          max_retries: 1
+
+        - task_key: create_metric_views
+          depends_on:
+            - task_key: run_lakeflow_foundation
+          sql_task:
+            file:
+              path: ../src/sql/setup_foundation.sql
+            warehouse_id: ${resources.sql_warehouses.wanderbricks_sql_warehouse.id}
+            parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+          max_retries: 1
