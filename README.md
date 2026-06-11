@@ -550,7 +550,7 @@ After the app writes memory or conversation state into Lakebase, bring that oper
 6. Select your project, branch, and Postgres database.
 7. Click **Create**.
 
-Now you can examine Lakebase Postgres tables from Unity Catalog. This reaches directly into the database and returns operational data through the governed catalog experience. For larger analytical use cases, Databricks can also replicate Lakebase changes into Lakehouse formats.
+Now you can examine Lakebase Postgres tables from Unity Catalog. This reaches directly into the database and returns operational data through the governed catalog experience. For larger analytical use cases, Databricks can also replicate Lakebase changes into Lakehouse formats. See: https://docs.databricks.com/aws/en/oltp/projects/lakebase-cdf
 
 What to notice:
 
